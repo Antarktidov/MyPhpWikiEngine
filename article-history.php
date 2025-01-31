@@ -59,19 +59,22 @@ if (isset($_GET["article_id"])) {
                 $updated_at = $row['updated_at'];
                 $title2 = $row['title'];
                 $text = $row['text'];
-                
 
-                $sql3 = "SELECT * FROM users WHERE id='$user_id'";
+                if ($user_id != 0) {
+                    $sql3 = "SELECT * FROM users WHERE id='$user_id'";
+                    $username = '';
 
-                $username = '';
+                    $result3 = $conn->query($sql3);
 
-                $result3 = $conn->query($sql3);
-
-                if ($result3->num_rows > 0) {
-                    while($row = $result3->fetch_assoc()) {
-                        $username = $row['name'];
+                    if ($result3->num_rows > 0) {
+                        while($row3 = $result3->fetch_assoc()) {
+                            $username = $row3['name'];
+                        }
                     }
-                if ($username == '') {
+                    if ($username == '') {
+                        $username = 'Анонимный участник';
+                    }
+                } else {
                     $username = 'Анонимный участник';
                 }
                 ?>
@@ -84,7 +87,7 @@ if (isset($_GET["article_id"])) {
             }
         }?></table><?php
     }
-}}}
+}}
 ?>
     
 </body>
